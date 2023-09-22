@@ -26,10 +26,20 @@ public class BreastCancerClassify {
 	/**
 	 * calculateDistance computes the distance between the two data
 	 * parameters. 
+	 * integer variable dist is the sum of distances, taken by squaring the difference of each
+	 * index.
+	 * 
+	 * code loops through an array from index 1 to any length - 1 to locate all 9 features.
 	 */
+    
 	public static double calculateDistance(int[] first, int[] second)
-	{
-		return -1;
+	{	
+		int dist = 0;
+		for (int i = 1; i < first.length -1; i++) {
+			dist += Math.pow(first[i] - second[i], 2);
+		}
+		return Math.sqrt(dist);
+
 	}
 	
 	/**
