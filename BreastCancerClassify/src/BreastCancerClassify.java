@@ -46,10 +46,16 @@ public class BreastCancerClassify {
 	 * getAllDistances creates an array of doubles with the distances
 	 * to each training instance. The double[] returned should have the 
 	 * same number of instances as trainData. 
+	 * 
+	 * The method loops through every row in the trainData data set and calls calculateDistance
+	 * to find each distance. The values are stored in the array of doubles called allDistances.
 	 */
 	public static double[] getAllDistances(int[][] trainData, int[] testInstance)
 	{
-		double[] allDistances = null;
+		double[] allDistances = new double[trainData.length];
+		for (int i = 0; i < trainData.length; i++) {
+			allDistances[i] = calculateDistance(trainData[i], testInstance);
+		}
 		return allDistances;
 	}
 	
