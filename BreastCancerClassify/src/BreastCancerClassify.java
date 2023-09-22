@@ -1,8 +1,8 @@
 /**
- * Name:
- * Period: 
- * Project:
- * Date last updated: 
+ * Name: Farzad Hasan
+ * Period: 1
+ * Project: BreastCancerClassify
+ * Date last updated: 9/21/2023
  * 
  * BreastCancerClassify contains the core implementation of the 
  * kNearestNeighbors algorithm to classify cell clumps as malignant

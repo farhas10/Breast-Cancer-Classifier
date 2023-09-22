@@ -1,9 +1,9 @@
 
 /**
- * Name:
- * Period:
- * Project:
- * Date last updated:
+ * Name: Farzad Hasan
+ * Period: 1
+ * Project: BreastCancerClassify
+ * Date last updated: 9/21/2023
  *
  * This class handles reading and writing test data from a file.
  *
