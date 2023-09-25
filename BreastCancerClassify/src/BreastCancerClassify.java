@@ -75,7 +75,7 @@ public class BreastCancerClassify {
 	
 	/**
 	 * findKClosestEntries finds and returns the indexes of the 
-	 * K closest distances in allDistances. Return an array of size K, 
+	 * k closest distances in allDistances. Return an array of size K, 
 	 * that is filled with the indexes of the closest distances (not
 	 * the distances themselves). 
 	 * 
