@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Name: Farzad Hasan
  * Period: 1
@@ -59,6 +61,18 @@ public class BreastCancerClassify {
 		return allDistances;
 	}
 	
+	private static boolean containsEntryValue(int l, int v, int [] indexes) {
+		for (int i = 0; i< indexes.length; i++) {
+			if ((l == 0) && (v == 0)) {
+				return true;
+			}
+			if (indexes[i]==v) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * findKClosestEntries finds and returns the indexes of the 
 	 * K closest distances in allDistances. Return an array of size K, 
@@ -69,7 +83,16 @@ public class BreastCancerClassify {
 	 */
 	public static int[] findKClosestEntries(double[] allDistances)
 	{
-		int[] kClosestIndexes = null;
+		int[] kClosestIndexes = new int[K];
+		for (int i = 0; i < K; i++) {
+			double minIndex = Double.MAX_VALUE;
+			for (int v = 0; v < allDistances.length; v++) {
+				if ((allDistances[v] < minIndex) && containsEntryValue(i, v, kClosestIndexes)) {
+					minIndex = allDistances[v];
+					kClosestIndexes[i] = v;
+				}
+			}
+		}
 		return kClosestIndexes;
 	}
 	
@@ -126,14 +149,14 @@ public class BreastCancerClassify {
 	
 	//DO NOT MODIFY THE MAIN METHOD
 	public static void main(String[] args) {
-
+		
 		int[][] trainData = InputHandler.populateData("./datasets/train_data.csv");
 		int[][] testData = InputHandler.populateData("./datasets/test_data.csv");
 		
 		//Display the distances between instances of the train data. 
 		//Points in the upper left corner (both benign) or in the bottom
 		//right (both malignant) should be darker. 
-		Grapher.createGraph(trainData);
+		//Grapher.createGraph(trainData);
 
 		int[] myResults = kNearestNeighbors(trainData, testData);
 
