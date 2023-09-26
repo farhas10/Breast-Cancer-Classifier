@@ -61,6 +61,11 @@ public class BreastCancerClassify {
 		return allDistances;
 	}
 	
+	/*
+	 * This is a separate helper method I made which intakes an array of indexes and checks
+	 * whether the current index in the loop from the previous method (findKClosestEntries)
+	 * has already been checked.
+	 */
 	private static boolean containsEntryValue(int l, int v, int [] indexes) {
 		for (int i = 0; i< indexes.length; i++) {
 			if ((l == 0) && (v == 0)) {
@@ -80,15 +85,22 @@ public class BreastCancerClassify {
 	 * the distances themselves). 
 	 * 
 	 * Be careful! This method can be tricky.
+	 * 
+	 * This method finds the K number of minimum values in a set of distances.
+	 * To do this, I first set a value as the "minimum" for the loop to begin comparing indexes
+	 * too. After each time I find a minimum, I record the indicie of that value in a different
+	 * array. I then call on a helper method who checks whether or not my index has already been
+	 * compared too, and if it has, it skips that index. This process repeats K times as it must
+	 * find K minimum values.
 	 */
 	public static int[] findKClosestEntries(double[] allDistances)
 	{
 		int[] kClosestIndexes = new int[K];
 		for (int i = 0; i < K; i++) {
-			double minIndex = Double.MAX_VALUE;
+			double minValue = Double.MAX_VALUE;
 			for (int v = 0; v < allDistances.length; v++) {
-				if ((allDistances[v] < minIndex) && containsEntryValue(i, v, kClosestIndexes)) {
-					minIndex = allDistances[v];
+				if ((allDistances[v] < minValue) && containsEntryValue(i, v, kClosestIndexes)) {
+					minValue = allDistances[v];
 					kClosestIndexes[i] = v;
 				}
 			}
@@ -105,6 +117,9 @@ public class BreastCancerClassify {
 	 * as benign.
 	 * 
 	 * Return one of the global integer constants defined in this function. 
+	 * 
+	 * The classify method creates two variables to count each occurences of a benign or malign
+	 * sample. It then returns the value with the higher number of occurences.
 	 */
 	public static int classify(int[][] trainData, int[] kClosestIndexes)
 	{
@@ -136,6 +151,9 @@ public class BreastCancerClassify {
 	 * @param trainData: all training instances
 	 * @param testData: all testing instances
 	 * @return: int array of classifications (BENIGN or MALIGNANT)
+	 * 
+	 * The code creates an array, myResults which stores the states of all the kNearestNeighbors.
+	 * The method then calls on all previous methods to find the information as needed before.
 	 */
 	public static int[] kNearestNeighbors(int[][] trainData, int[][] testData){
 		int[] myResults = new int [testData.length];
@@ -162,6 +180,13 @@ public class BreastCancerClassify {
 	 * listed in the last column of the data set.
 	 * @param: myResults: The predicted classifcations produced by your KNN model
 	 * @param: testData: The original data that contains the true classifications for the test data
+	 * 
+	 * getAccuracy checks how many of the strings are correctly classified when compared to the 
+	 * testData or the "answers."
+	 * 
+	 * The method works by checking the last index of each array in the testData to find whether
+	 * it is benign or malignant. Then it compares and will increment the accuracy variable.
+	 * 
 	 */
 	public static String getAccuracy(int[] myResults, int[][] testData) {
 		double accurate = 0;
@@ -183,7 +208,7 @@ public class BreastCancerClassify {
 		//Display the distances between instances of the train data. 
 		//Points in the upper left corner (both benign) or in the bottom
 		//right (both malignant) should be darker. 
-		//Grapher.createGraph(trainData);
+		Grapher.createGraph(trainData);
 
 		int[] myResults = kNearestNeighbors(trainData, testData);
 

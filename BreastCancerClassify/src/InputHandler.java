@@ -25,6 +25,10 @@ public class InputHandler
      /**
      * Returns a two dimensional int array corresponding to a csv file (defined by filename) of
      * ints.
+     * 
+     * The method takes in a .csv file, finds the length, and goes through each line.
+     * While going through each line, the string is split, integer parsed, and stored in an int 
+     * array. All of these arrays are then stored in a 2D array.
      */
     
 	public static int[][] populateData(String filename)
