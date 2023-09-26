@@ -26,6 +26,7 @@ public class InputHandler
      */
     public static int[][] populateData(String filename)
     {
+    	
         return new int[0][0];
     }
 

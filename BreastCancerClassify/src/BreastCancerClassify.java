@@ -170,7 +170,7 @@ public class BreastCancerClassify {
 				accurate ++;
 			}
 		}
-		return accurate/testData.length*100 + "%";
+		return String.format("%.2f", accurate/testData.length*100) + "%";
 	}
 	
 	
