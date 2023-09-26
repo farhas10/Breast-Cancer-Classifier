@@ -11,9 +11,11 @@
  
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * InputHandler processes all input files and also prints the accuracy of results.
@@ -24,10 +26,38 @@ public class InputHandler
      * Returns a two dimensional int array corresponding to a csv file (defined by filename) of
      * ints.
      */
-    public static int[][] populateData(String filename)
+    
+	public static int[][] populateData(String filename)
     {
-    	
-        return new int[0][0];
+        int [][] dataset = null;
+    	try {
+    	BufferedReader br = new BufferedReader(new FileReader(new File(filename)));
+        int numOfLines = 0;
+        while (br.readLine() != null) {
+        	numOfLines++;
+        }
+        br.close();
+        dataset = new int [numOfLines][11];
+        BufferedReader br2 = new BufferedReader(new FileReader(new File(filename)));
+        for (int i = 0; i < numOfLines; i++) {
+        	String data = br2.readLine();
+        	String[] dataraw =data.split(",");
+        	
+        	int [] arrayOfVals = new int[dataraw.length];
+        	for (int v = 0; v< dataraw.length; v++) {
+        		int value = Integer.parseInt(dataraw[v]);
+        		arrayOfVals[v]=value;
+        		
+        	}
+        	dataset[i]=arrayOfVals;
+
+        }
+        br2.close();
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return dataset;
     }
 
 }
