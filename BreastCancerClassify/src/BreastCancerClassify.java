@@ -121,10 +121,9 @@ public class BreastCancerClassify {
 		if (benign > malignant) {
 			return BENIGN;
 		}
-		if (malignant > benign) {
+		else {
 			return MALIGNANT;
 		}
-		return -1;
 	}
 	
 	/**
