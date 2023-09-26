@@ -138,7 +138,13 @@ public class BreastCancerClassify {
 	 * @return: int array of classifications (BENIGN or MALIGNANT)
 	 */
 	public static int[] kNearestNeighbors(int[][] trainData, int[][] testData){
-		int[] myResults = null;
+		int[] myResults = new int [testData.length];
+		for (int i = 0; i < testData.length; i++) {
+			double [] distances = getAllDistances(trainData, testData[i]);
+			int [] KClosestIndexes = findKClosestEntries(distances);
+			int state = classify(trainData, KClosestIndexes);
+			myResults[i]=state;
+		}
 		return myResults;
 	}
 
@@ -158,7 +164,13 @@ public class BreastCancerClassify {
 	 * @param: testData: The original data that contains the true classifications for the test data
 	 */
 	public static String getAccuracy(int[] myResults, int[][] testData) {
-		return null;
+		double accurate = 0;
+		for (int i = 0; i<testData.length; i++) {
+			if (myResults[i] == testData[i][testData[i].length-1]) {
+				accurate ++;
+			}
+		}
+		return accurate/testData.length + "%";
 	}
 	
 	
