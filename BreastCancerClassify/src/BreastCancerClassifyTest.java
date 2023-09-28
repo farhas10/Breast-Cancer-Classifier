@@ -43,6 +43,8 @@ public class BreastCancerClassifyTest {
 		double value = BreastCancerClassify.calculateDistance(first, second);
 		assertEquals(0, value, 0);	
 	}
+	
+	//Test to see what happens if all the values are 0.
 	@Test
 	public void testGetAllDistances1() {
 		int [][] trainData = {
@@ -59,6 +61,7 @@ public class BreastCancerClassifyTest {
 	
 	@Test
 	public void testGetAllDistances2() {
+		
 	}
 	
 	

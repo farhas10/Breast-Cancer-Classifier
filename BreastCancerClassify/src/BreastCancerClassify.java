@@ -16,7 +16,7 @@ import java.util.Arrays;
  * 	2) getAllDistances
  * 	3) findKClosestEntries
  * 	4) classify
- *  5) kNearestNeighbors (use your helpers correctly!)
+ *  5) kNearestNeighbors (use your helpers correctly)
  *  6) getAccuracy
  */
 public class BreastCancerClassify {
