@@ -21,6 +21,7 @@ import java.util.Arrays;
  */
 public class BreastCancerClassify {
 	
+	//Class constants which are used throughout the code to increase adaptability.
 	public static final Integer K = 5;
     public static final Integer BENIGN = 2;
     public static final Integer MALIGNANT = 4;
@@ -37,6 +38,8 @@ public class BreastCancerClassify {
 	public static double calculateDistance(int[] first, int[] second)
 	{	
 		int dist = 0;
+		//Just loops through the length of the list and uses distance formula to find distance.
+		//The values are summed in the integer variable, dist.
 		for (int i = 1; i < first.length -1; i++) {
 			dist += Math.pow(first[i] - second[i], 2);
 		}
@@ -54,7 +57,10 @@ public class BreastCancerClassify {
 	 */
 	public static double[] getAllDistances(int[][] trainData, int[] testInstance)
 	{
+		//New array created which is the length of the trainData.
 		double[] allDistances = new double[trainData.length];
+		//Loops through the length of trainData to find all the distances from the testInstance to
+		//the current point the loop is on. Each distance is stored in the allDistances array.
 		for (int i = 0; i < trainData.length; i++) {
 			allDistances[i] = calculateDistance(trainData[i], testInstance);
 		}
@@ -67,10 +73,14 @@ public class BreastCancerClassify {
 	 * has already been checked.
 	 */
 	private static boolean containsEntryValue(int l, int v, int [] indexes) {
+		//First loop which goes through the array of the existing indexes.
 		for (int i = 0; i< indexes.length; i++) {
+			//l tracks the current iteration of the search (1-5).
+			//v tracks the index being searched in findKClosestEntries.
 			if ((l == 0) && (v == 0)) {
 				return true;
 			}
+			//if the same index is found, returns false.
 			if (indexes[i]==v) {
 				return false;
 			}
@@ -95,11 +105,19 @@ public class BreastCancerClassify {
 	 */
 	public static int[] findKClosestEntries(double[] allDistances)
 	{
+		//New array kClosestIndexes is made to the length of the class constant.
 		int[] kClosestIndexes = new int[K];
 		for (int i = 0; i < K; i++) {
+			//for the initial state of the minimum value, I set it to the maximum possible value
+			//as I get an error when the minValue is initially 0 in the case where it is also the 
+			//lowest number in the array.
 			double minValue = Double.MAX_VALUE;
 			for (int v = 0; v < allDistances.length; v++) {
+				//This first checks whether the value at the current distance is less than the min
+				//value. Then it calls on the helper method to also check if the index has already
+				//been stored as a minimum index.
 				if ((allDistances[v] < minValue) && containsEntryValue(i, v, kClosestIndexes)) {
+					//Stores the index of the value IF it is a minimum.
 					minValue = allDistances[v];
 					kClosestIndexes[i] = v;
 				}
@@ -123,16 +141,22 @@ public class BreastCancerClassify {
 	 */
 	public static int classify(int[][] trainData, int[] kClosestIndexes)
 	{
+		//two counters are put here to count the number of times malignant or benign is the
+		//classification.
 		int benign = 0;
 		int malignant = 0;
+		//checks every value in kClosestIndexes to see if it is benign or not.
 		for (int index : kClosestIndexes) {
+			//will increment by 1 if benign.
 			if (trainData[index][trainData[index].length-1] == BENIGN) {
 				benign++;
 			}
+			//will increment by 1 if malignant
 			if (trainData[index][trainData[index].length-1] == MALIGNANT) {
 				malignant++;
 			}
 		}
+		//compares to check which one is more prevalent.
 		if (benign > malignant) {
 			return BENIGN;
 		}
@@ -156,10 +180,15 @@ public class BreastCancerClassify {
 	 * The method then calls on all previous methods to find the information as needed before.
 	 */
 	public static int[] kNearestNeighbors(int[][] trainData, int[][] testData){
+		//New array made to store all the classifications that will be made.
 		int[] myResults = new int [testData.length];
 		for (int i = 0; i < testData.length; i++) {
+			//Loops for the length of the array called testData
+			//First stores all the distances from calling the getAllDistances method.
 			double [] distances = getAllDistances(trainData, testData[i]);
+			//Stores the indexes of the KClosestIndexes from findKClosestEntries.
 			int [] KClosestIndexes = findKClosestEntries(distances);
+			//Calls on classify to classify all the data points in trainData.
 			int state = classify(trainData, KClosestIndexes);
 			myResults[i]=state;
 		}
@@ -188,13 +217,20 @@ public class BreastCancerClassify {
 	 * it is benign or malignant. Then it compares and will increment the accuracy variable.
 	 * 
 	 */
+	
+	
 	public static String getAccuracy(int[] myResults, int[][] testData) {
+		//Value which counts the number of accurate classifications.
 		double accurate = 0;
 		for (int i = 0; i<testData.length; i++) {
+			//Checks the testData against myResults to see if the classification is correct.
+			//If so, accurate is incremented by 1. This loops for the length of the list.
 			if (myResults[i] == testData[i][testData[i].length-1]) {
 				accurate ++;
 			}
 		}
+		
+		//Properly formatted print statement.
 		return String.format("%.2f", accurate/testData.length*100) + "%";
 	}
 	
