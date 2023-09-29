@@ -34,33 +34,42 @@ public class InputHandler
 	public static int[][] populateData(String filename)
     {
         int [][] dataset = null;
+        ArrayList <int[] >data = new ArrayList<int[]>();
     	try {
     	BufferedReader br = new BufferedReader(new FileReader(new File(filename)));
-        int numOfLines = 0;
-        while (br.readLine() != null) {
-        	numOfLines++;
-        }
-        br.close();
-        dataset = new int [numOfLines][11];
-        BufferedReader br2 = new BufferedReader(new FileReader(new File(filename)));
-        for (int i = 0; i < numOfLines; i++) {
-        	String data = br2.readLine();
-        	String[] dataraw =data.split(",");
-        	
+    	//Reads the line of text
+        String vals= br.readLine();
+        //will loop until the next line is empty.
+        while (vals != null) {
+        	//Array stores the string and splits it on the ",".
+        	String[] dataraw = vals.split(",");
         	int [] arrayOfVals = new int[dataraw.length];
+        	//Loop made to parse the array of strings for integers.
         	for (int v = 0; v< dataraw.length; v++) {
         		int value = Integer.parseInt(dataraw[v]);
         		arrayOfVals[v]=value;
-        		
-        	}
-        	dataset[i]=arrayOfVals;
-
         }
-        br2.close();
+        	//Added to the array list
+        	data.add(arrayOfVals);
+        	//readline called again to start the cycle again.
+        	vals=br.readLine();
+   
+        //this is a loop to transfer the array list items into a 2D array object.
+        dataset = new int [data.size()][data.get(0).length];
+        for (int i = 0; i < data.size(); i++) {
+        	dataset[i]=data.get(i);
+        	}
+        }
+        //closing br to prevent leaks.
+        br.close();
     	}
+    	
+    	//exception block in case the file is not found or such.
     	catch (Exception e) {
     		e.printStackTrace();
     	}
+    	
+    	//returns the data in a way that the program can read.
     	return dataset;
     }
 
