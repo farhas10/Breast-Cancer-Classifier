@@ -72,16 +72,16 @@ public class BreastCancerClassify {
 	 * whether the current index in the loop from the previous method (findKClosestEntries)
 	 * has already been checked.
 	 */
-	private static boolean containsEntryValue(int l, int v, int [] indexes) {
+	private static boolean containsEntryValue(int searchNumber, int currentIndex, int [] foundIndexes) {
 		//First loop which goes through the array of the existing indexes.
-		for (int i = 0; i< indexes.length; i++) {
+		for (int i = 0; i< foundIndexes.length; i++) {
 			//l tracks the current iteration of the search (1-5).
 			//v tracks the index being searched in findKClosestEntries.
-			if ((l == 0) && (v == 0)) {
+			if ((searchNumber == 0) && (currentIndex == 0)) {
 				return true;
 			}
 			//if the same index is found, returns false.
-			if (indexes[i]==v) {
+			if (foundIndexes[i]==currentIndex) {
 				return false;
 			}
 		}
@@ -107,19 +107,19 @@ public class BreastCancerClassify {
 	{
 		//New array kClosestIndexes is made to the length of the class constant.
 		int[] kClosestIndexes = new int[K];
-		for (int i = 0; i < K; i++) {
+		for (int searchNumber = 0; searchNumber < K; searchNumber++) {
 			//for the initial state of the minimum value, I set it to the maximum possible value
 			//as I get an error when the minValue is initially 0 in the case where it is also the 
 			//lowest number in the array.
 			double minValue = Double.MAX_VALUE;
-			for (int v = 0; v < allDistances.length; v++) {
+			for (int currentIndex = 0; currentIndex < allDistances.length; currentIndex++) {
 				//This first checks whether the value at the current distance is less than the min
 				//value. Then it calls on the helper method to also check if the index has already
 				//been stored as a minimum index.
-				if ((allDistances[v] < minValue) && containsEntryValue(i, v, kClosestIndexes)) {
+				if ((allDistances[currentIndex] < minValue) && containsEntryValue(searchNumber, currentIndex, kClosestIndexes)) {
 					//Stores the index of the value IF it is a minimum.
-					minValue = allDistances[v];
-					kClosestIndexes[i] = v;
+					minValue = allDistances[currentIndex];
+					kClosestIndexes[searchNumber] = currentIndex;
 				}
 			}
 		}
